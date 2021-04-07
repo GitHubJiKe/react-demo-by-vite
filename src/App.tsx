@@ -9,13 +9,11 @@ import "./style.scss";
 export default function App() {
   return (
     <Observer>
-      {() => {
-        return (
-          <Spin spinning={Store.globalLoading} wrapperClassName="global-spin">
-            <Router />
-          </Spin>
-        );
-      }}
+      {() => (
+        <Spin spinning={Store.globalLoading} wrapperClassName="global-spin">
+          <Router />
+        </Spin>
+      )}
     </Observer>
   );
 }
