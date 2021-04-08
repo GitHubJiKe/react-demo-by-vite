@@ -1,19 +1,17 @@
 import { Spin } from "antd";
-import { Observer } from "mobx-react";
+import { observer } from "mobx-react";
 import React from "react";
 import Router from "./Router";
 import Store from "./Store";
 
 import "./style.scss";
 
-export default function App() {
+function App() {
   return (
-    <Observer>
-      {() => (
-        <Spin spinning={Store.globalLoading} wrapperClassName="global-spin">
-          <Router />
-        </Spin>
-      )}
-    </Observer>
+    <Spin spinning={Store.globalLoading} wrapperClassName="global-spin">
+      <Router />
+    </Spin>
   );
 }
+
+export default observer(App);

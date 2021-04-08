@@ -6,8 +6,8 @@ import Store from "../../Store";
 export default function Page2() {
   return (
     <Space>
-      <LinkButton to={Store.routePathMap.page1}>Go to Page1</LinkButton>
-      <LinkButton to={Store.routePathMap.home}>Go to Home</LinkButton>
+      <LinkButton to={Store.routePathMap.page1}>{__("前往第一页")}</LinkButton>
+      <LinkButton to={Store.routePathMap.home}>{__("回到首页")}</LinkButton>
     </Space>
   );
 }

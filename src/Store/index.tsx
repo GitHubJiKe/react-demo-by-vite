@@ -7,6 +7,7 @@ import {
   PageNoPermission,
   PageHome,
   PageLogin,
+  Page3,
 } from "../Pages";
 import { IRouteProps } from "../Routes";
 import { Loading } from "../components";
@@ -16,6 +17,7 @@ export const routePathMap = {
   no_permission: "/no-permission",
   page1: "/page1",
   page2: "/page2",
+  page3: "/page3",
   home: "/home",
   login: "/login",
 };
@@ -56,10 +58,18 @@ const routes: IRouteProps[] = [
     redirect: (data: VisitData) =>
       data.permissions.includes("page2") ? "/404" : "/no-permission",
   },
+  {
+    component: Page3,
+    path: routePathMap.page3,
+    key: "page3",
+    visitable: (data: VisitData) => data.permissions.includes("page3"),
+    redirect: routePathMap.no_permission,
+  },
 ];
 
 const VISIT_DATA = "VISIT_DATA";
 const LOGINED = "LOGINED";
+const LOCALE = "LOCALE";
 
 class AppStore {
   @observable visitData?: VisitData;
@@ -67,11 +77,13 @@ class AppStore {
   routePathMap = routePathMap;
   @observable isLogined: boolean = false;
   @observable globalLoading: boolean = false;
+  @observable locale: Locale = "en";
 
   constructor() {
     makeObservable(this);
     const dataStr = sessionStorage.getItem(VISIT_DATA);
     const loginStr = sessionStorage.getItem(LOGINED);
+    const localeStr = sessionStorage.getItem(LOCALE);
     if (dataStr) {
       this.visitData = JSON.parse(dataStr);
     }
@@ -80,12 +92,17 @@ class AppStore {
       this.isLogined = loginStr === "true";
     }
 
+    if (localeStr) {
+      this.locale = localeStr as Locale;
+    }
+
     this.routes.forEach((route) => {
       if (!route.visitable && route.key !== "login") {
         route.visitable = () => this.isLogined;
       }
     });
   }
+
   @action
   initApp() {
     // 网络请求 获取信息 修改路由配置等操作
@@ -119,6 +136,13 @@ class AppStore {
 
       resolve(true);
     });
+  }
+
+  @action
+  changeLocale(locale: Locale) {
+    this.locale = locale;
+
+    sessionStorage.setItem(LOCALE, locale);
   }
 }
 

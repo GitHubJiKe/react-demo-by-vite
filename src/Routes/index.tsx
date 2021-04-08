@@ -10,6 +10,7 @@ import {
 import { History } from "history";
 import { VisitData } from "../Router";
 import Store from "../Store";
+import { observer } from "mobx-react";
 
 export interface IRouteProps extends RouteProps {
   // eslint-disable-next-line no-unused-vars
@@ -60,19 +61,42 @@ export default function Routes<R extends Array<IRouteProps> = IRouteProps[]>({
     }
 
     if (visitData && visitable && !visitable?.(visitData)) {
-      if (redirect) {
-        return (
-          <Redirect
-            key={key}
-            to={{
-              ...location,
-              pathname:
-                typeof redirect === "function" ? redirect(visitData) : redirect,
-            }}
-          />
-        );
-      }
-      return null;
+      return (
+        <Route
+          key={key}
+          // @ts-ignore
+          render={() => (
+            <>
+              {/** @ts-ignore */}
+              <Component location={location} history={history} />
+              <Redirect
+                key={key}
+                to={{
+                  ...location,
+                  pathname:
+                    typeof redirect === "function"
+                      ? redirect(visitData)
+                      : redirect,
+                }}
+              />
+            </>
+          )}
+          {...rest}
+        />
+      );
+    }
+
+    if (redirect && visitData) {
+      return (
+        <Redirect
+          key={key}
+          to={{
+            ...location,
+            pathname:
+              typeof redirect === "function" ? redirect(visitData) : redirect,
+          }}
+        />
+      );
     }
 
     if (children) {
@@ -103,5 +127,6 @@ export default function Routes<R extends Array<IRouteProps> = IRouteProps[]>({
   }
 
   const realRouters = routers.filter((v) => v);
+
   return <Switch>{realRouters}</Switch>;
 }

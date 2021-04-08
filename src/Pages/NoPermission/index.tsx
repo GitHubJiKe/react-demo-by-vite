@@ -6,11 +6,11 @@ export default function PageNoPermission(props: ComponentRouteProps) {
   return (
     <Result
       status="403"
-      title="No Permission"
-      subTitle="Sorry, you have no permission to access this page."
+      title={__("暂无权限")}
+      subTitle={__("对不起，您暂无权限访问此页面")}
       extra={
         <Button type="primary" onClick={() => props.history.goBack()}>
-          Go Back
+          {__("返回")}
         </Button>
       }
     />

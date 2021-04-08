@@ -2,10 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-
-import "antd/dist/antd.css";
 import { MobXProviderContext } from "mobx-react";
 import Store from "./Store";
+import { __, printf, sprintf } from "./utils/i18n";
+import "antd/dist/antd.css";
+
+(function () {
+  // 挂载全局函数
+  window.__ = __;
+  window.printf = printf;
+  window.sprintf = sprintf;
+})();
 
 ReactDOM.render(
   <React.StrictMode>

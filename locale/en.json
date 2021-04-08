@@ -1,0 +1,19 @@
+{
+  "前往第一页": "Go to Page1",
+  "前往第二页": "Go to Page2",
+  "回到首页": "Back Home",
+  "返回": "Go Back",
+  "对不起，您访问的页面不存在": "Sorry, This page is not exist",
+  "登录": "Login",
+  "用户名": "Username",
+  "请输入用户名": "Please enter your username",
+  "密码": "Password",
+  "请输入密码": "Please enter your password",
+  "暂无权限": "No Permission",
+  "对不起，您暂无权限访问此页面": "Sorry, You have no permission to access this page",
+  "退出": "Logout",
+  "当前时间：%s": "Current Time：%s",
+  "我是一段奇怪的带有色彩的文案：%s，怎么样？": "I am colorful texts：%s，how do you think？",
+  "彩色的文案内容": "Colorful texts",
+  "前往第三页": "Go to Page3"
+}

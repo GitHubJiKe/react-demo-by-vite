@@ -7,10 +7,16 @@ const FormItem = Form.Item;
 
 import "./style.scss";
 
+const layout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
+};
+
 export default function Login() {
   const history = useHistory();
   return (
     <Form
+      {...layout}
       name="login"
       onFinish={(values) => {
         Store.login(values).then((success) => {
@@ -21,23 +27,25 @@ export default function Login() {
       }}
     >
       <div className="login-page">
-        <h3 className="title">Login</h3>
+        <h3 className="title">{__("登录")}</h3>
         <FormItem
-          label="Username"
+          label={__("用户名")}
+          labelAlign="left"
           name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          rules={[{ required: true, message: __("请输入用户名") }]}
         >
-          <Input type="text" placeholder="Please input your username!" />
+          <Input type="text" placeholder={__("请输入用户名")} />
         </FormItem>
         <FormItem
-          label="Password"
+          label={__("密码")}
+          labelAlign="left"
           name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[{ required: true, message: __("请输入密码") }]}
         >
-          <Input.Password placeholder="Please input your password!" />
+          <Input.Password placeholder={__("请输入密码")} />
         </FormItem>
         <Button type="primary" className="login-btn" htmlType="submit">
-          Login
+          {__("登录")}
         </Button>
       </div>
     </Form>
