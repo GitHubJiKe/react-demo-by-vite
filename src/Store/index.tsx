@@ -119,7 +119,7 @@ class AppStore {
       console.log(data);
       setTimeout(() => {
         this.isLogined = true;
-        this.visitData = { age: 25, permissions: ["page2"] };
+        this.visitData = { age: 25, permissions: ["page2", "page1"] };
         sessionStorage.setItem(VISIT_DATA, JSON.stringify(this.visitData));
         sessionStorage.setItem(LOGINED, "true");
         Loading.global(false);

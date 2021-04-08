@@ -1,5 +1,5 @@
 import React from "react";
-import { LinkButton } from "../../components";
+import { LinkButton, withPermissions } from "../../components";
 import { LinkButtonItem } from "../../components/LinkButton";
 import Store from "../../Store";
 
@@ -15,12 +15,20 @@ export default function PageHome() {
   return (
     <>
       <LinkButton.Group items={buttons} />
-      <div>
-        {sprintf(
-          __("我是一段奇怪的带有色彩的文案：%s，怎么样？"),
-          <span style={{ color: "red" }}>{__("彩色的文案内容")}</span>
-        )}
-      </div>
+      <Colorful />
     </>
   );
 }
+
+function ColorfulText() {
+  return (
+    <div>
+      {sprintf(
+        __("我是一段奇怪的带有色彩的文案：%s，怎么样？"),
+        <span style={{ color: "red" }}>{__("彩色的文案内容")}</span>
+      )}
+    </div>
+  );
+}
+
+const Colorful = withPermissions(ColorfulText, ["page2"]);
