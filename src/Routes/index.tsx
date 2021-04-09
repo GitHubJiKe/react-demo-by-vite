@@ -10,7 +10,6 @@ import {
 import { History } from "history";
 import { VisitData } from "../Router";
 import Store from "../Store";
-import { observer } from "mobx-react";
 
 export interface IRouteProps extends RouteProps {
   // eslint-disable-next-line no-unused-vars

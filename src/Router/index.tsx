@@ -5,7 +5,6 @@ import { useHistory } from "react-router";
 import Routes from "../Routes";
 import Store from "../Store";
 import dayjs from "dayjs";
-import { observable } from "mobx";
 
 export interface VisitData {
   age: number;
