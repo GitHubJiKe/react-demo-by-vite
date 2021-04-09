@@ -78,6 +78,7 @@ class AppStore {
   @observable isLogined: boolean = false;
   @observable globalLoading: boolean = false;
   @observable locale: Locale = "en";
+  @observable token: string = "";
 
   constructor() {
     makeObservable(this);
@@ -143,6 +144,14 @@ class AppStore {
     this.locale = locale;
 
     sessionStorage.setItem(LOCALE, locale);
+  }
+
+  @action setToken(token: string) {
+    this.token = token;
+  }
+
+  @action loading(loading: boolean) {
+    this.globalLoading = loading;
   }
 }
 

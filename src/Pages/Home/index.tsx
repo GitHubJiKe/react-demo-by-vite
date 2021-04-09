@@ -1,9 +1,17 @@
-import React from "react";
-import { LinkButton, withPermissions } from "../../components";
+import { Button } from "antd";
+import React, { useState } from "react";
+import { ErrorBox, LinkButton, withPermissions } from "../../components";
 import { LinkButtonItem } from "../../components/LinkButton";
+import useFetch from "../../hooks/useFetch";
 import Store from "../../Store";
+import API from "../../utils/API";
+
+interface IData {
+  text: string;
+}
 
 export default function PageHome() {
+  const [count, setCount] = useState(0);
   const buttons: LinkButtonItem[] = [
     {
       path: Store.routePathMap.page1,
@@ -12,9 +20,31 @@ export default function PageHome() {
     },
     { path: Store.routePathMap.page2, label: __("前往第二页") },
   ];
+
+  const { data, error, fetchData } = useFetch<IData>(
+    {
+      method: "get",
+      url: API.home.list,
+    },
+    [count]
+  );
+
+  if (error) {
+    return <ErrorBox error={error} onClick={fetchData} />;
+  }
+
   return (
     <>
       <LinkButton.Group items={buttons} />
+      <Button onClick={fetchData}>fetch Data manual</Button>
+      <Button
+        onClick={() => {
+          setCount((c) => c + 1);
+        }}
+      >
+        changeCount to fetch Data
+      </Button>
+      {data?.text}
       <Colorful />
     </>
   );
