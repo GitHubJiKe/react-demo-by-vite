@@ -25,6 +25,7 @@ export default function PageHome() {
     {
       method: "get",
       url: API.home.list,
+      params: { name: "aaaa" },
     },
     [count]
   );

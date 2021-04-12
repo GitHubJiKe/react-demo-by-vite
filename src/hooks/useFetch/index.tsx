@@ -13,6 +13,8 @@ interface IConfig {
   globalLoading?: boolean;
   /** 是否已进入就发起请求 默认发起 */
   immediatelyFetch?: boolean;
+  /** 请求参数 */
+  params?: Record<string, any>;
 }
 
 const DEV_HOST = "https://dev.com";
@@ -33,7 +35,13 @@ function getFullUrl(url: string) {
 }
 
 export default function useFetch<TData>(
-  { method, url, globalLoading = true, immediatelyFetch = true }: IConfig,
+  {
+    method,
+    url,
+    globalLoading = true,
+    immediatelyFetch = true,
+    params,
+  }: IConfig,
   deps?: any[]
 ) {
   const [loading, setLoading] = useState(false);
@@ -45,7 +53,10 @@ export default function useFetch<TData>(
     setLoading(true);
     globalLoading && Loading.global(true);
     try {
-      const res = await http[method]<TData>(getFullUrl(url));
+      const res = await http[method]<TData>(
+        getFullUrl(url),
+        method === "get" ? { params } : params
+      );
 
       if (res && res.data) {
         setData(res.data);
@@ -63,9 +74,9 @@ export default function useFetch<TData>(
       if (ref.current) {
         fetchData();
         return;
-      } else {
-        ref.current = true;
       }
+
+      ref.current = true;
     },
     deps ? deps : []
   );
