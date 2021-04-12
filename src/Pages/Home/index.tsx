@@ -24,8 +24,8 @@ export default function PageHome() {
   const { data, error, fetchData } = useFetch<IData>(
     {
       method: "get",
-      url: API.home.list,
-      params: { name: "aaaa" },
+      url: API.home.list(111, "xxx"),
+      params: { age: 26 },
     },
     [count]
   );
