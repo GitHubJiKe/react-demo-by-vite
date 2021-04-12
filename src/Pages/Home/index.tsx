@@ -2,6 +2,7 @@ import { Button } from "antd";
 import React, { useState } from "react";
 import { ErrorBox, LinkButton, withPermissions } from "../../components";
 import { LinkButtonItem } from "../../components/LinkButton";
+import withPreload from "../../components/withPreload";
 import useFetch from "../../hooks/useFetch";
 import Store from "../../Store";
 import API from "../../utils/API";
@@ -10,7 +11,14 @@ interface IData {
   text: string;
 }
 
-export default function PageHome() {
+interface IHomeDataList {
+  name: string;
+}
+interface IPageHomeProps {
+  data: IHomeDataList;
+}
+
+function PageHome({ data: homeData }: IPageHomeProps) {
   const [count, setCount] = useState(0);
   const buttons: LinkButtonItem[] = [
     {
@@ -46,20 +54,33 @@ export default function PageHome() {
         changeCount to fetch Data
       </Button>
       {data?.text}
-      <Colorful />
+      <Colorful text={homeData.name} />
     </>
   );
 }
 
-function ColorfulText() {
+function ColorfulText({ text }: { text: string }) {
   return (
     <div>
       {sprintf(
         __("我是一段奇怪的带有色彩的文案：%s，怎么样？"),
-        <span style={{ color: "red" }}>{__("彩色的文案内容")}</span>
+        <span style={{ color: "red" }}>{text}</span>
       )}
     </div>
   );
 }
 
 const Colorful = withPermissions(ColorfulText, ["page2"]);
+
+export default withPreload<IHomeDataList, IPageHomeProps>(
+  {
+    loader: () => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({ name: "home page data" });
+        }, 2000);
+      });
+    },
+  },
+  PageHome
+);

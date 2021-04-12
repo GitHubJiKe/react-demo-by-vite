@@ -60,6 +60,7 @@ export default function useFetch<TData>(
 
       if (res && res.data) {
         setData(res.data);
+        setError(undefined);
       }
     } catch (error) {
       setError(error);
