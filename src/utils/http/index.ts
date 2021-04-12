@@ -14,7 +14,6 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 });
 
 // axios.interceptors.response.use((res: AxiosResponse) => {
-// handle res
 //   return res;
 // });
 

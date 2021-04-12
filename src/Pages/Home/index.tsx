@@ -8,7 +8,9 @@ import Store from "../../Store";
 import API from "../../utils/API";
 
 interface IData {
-  text: string;
+  name: string;
+  age: number;
+  id: number;
 }
 
 interface IHomeDataList {
@@ -29,11 +31,12 @@ function PageHome({ data: homeData }: IPageHomeProps) {
     { path: Store.routePathMap.page2, label: __("前往第二页") },
   ];
 
-  const { data, error, fetchData } = useFetch<IData>(
+  const { data, error, fetchData } = useFetch<IData[]>(
     {
       method: "get",
       url: API.home.list(111, "xxx"),
       params: { age: 26 },
+      useCache: true,
     },
     [count]
   );
@@ -53,7 +56,11 @@ function PageHome({ data: homeData }: IPageHomeProps) {
       >
         changeCount to fetch Data
       </Button>
-      {data?.text}
+      {data?.map((d) => (
+        <div key={d.id}>
+          name:{d.name} ;age:{d.age}
+        </div>
+      ))}
       <Colorful text={homeData.name} />
     </>
   );

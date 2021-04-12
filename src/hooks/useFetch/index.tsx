@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Loading } from "../../components";
+import cacheMap from "../../utils/CacheMap";
 import http from "../../utils/http";
+import _ from "lodash";
 
 type Method = "get" | "delete" | "head" | "options" | "post" | "put" | "patch";
 
@@ -15,6 +17,7 @@ interface IConfig {
   immediatelyFetch?: boolean;
   /** 请求参数 */
   params?: Record<string, any>;
+  useCache?: boolean;
 }
 
 const DEV_HOST = "https://dev.com";
@@ -41,6 +44,7 @@ export default function useFetch<TData>(
     globalLoading = true,
     immediatelyFetch = true,
     params,
+    useCache = false,
   }: IConfig,
   deps?: any[]
 ) {
@@ -50,17 +54,28 @@ export default function useFetch<TData>(
   const ref = useRef(immediatelyFetch);
 
   const fetchData = useCallback(async () => {
+    const fullUrl = getFullUrl(url);
+
+    if (useCache && cacheMap.get(fullUrl)) {
+      setData(_.cloneDeep(cacheMap.get(fullUrl)));
+      return;
+    }
+
     setLoading(true);
     globalLoading && Loading.global(true);
+
     try {
       const res = await http[method]<TData>(
-        getFullUrl(url),
+        fullUrl,
         method === "get" ? { params } : params
       );
 
       if (res && res.data) {
         setData(res.data);
         setError(undefined);
+        if (useCache) {
+          cacheMap.set(fullUrl, res.data);
+        }
       }
     } catch (error) {
       setError(error);
