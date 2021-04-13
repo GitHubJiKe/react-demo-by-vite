@@ -1,5 +1,5 @@
-import { Button } from "antd";
 import React, { useState } from "react";
+import { Button } from "antd";
 import { ErrorBox, LinkButton, withPermissions } from "../../components";
 import { LinkButtonItem } from "../../components/LinkButton";
 import withPreload from "../../components/withPreload";
@@ -33,7 +33,6 @@ function PageHome({ data: homeData }: IPageHomeProps) {
 
   const { data, error, fetchData } = useFetch<IData[]>(
     {
-      method: "get",
       url: API.home.list(111, "xxx"),
       params: { age: 26 },
       useCache: true,

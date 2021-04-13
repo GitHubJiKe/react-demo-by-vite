@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { Loading } from "../../components";
 import cacheMap from "../../utils/CacheMap";
 import http from "../../utils/http";
-import _ from "lodash";
 
 type Method = "get" | "delete" | "head" | "options" | "post" | "put" | "patch";
 
@@ -10,7 +9,7 @@ interface IConfig {
   /** api url */
   url: string;
   /** 请求方法 */
-  method: Method;
+  method?: Method;
   /** 是否开启全局Loading 默认开启 */
   globalLoading?: boolean;
   /** 是否已进入就发起请求 默认发起 */
@@ -39,7 +38,7 @@ function getFullUrl(url: string) {
 
 export default function useFetch<TData>(
   {
-    method,
+    method = "get",
     url,
     globalLoading = true,
     immediatelyFetch = true,
@@ -55,9 +54,9 @@ export default function useFetch<TData>(
 
   const fetchData = useCallback(async () => {
     const fullUrl = getFullUrl(url);
-
-    if (useCache && cacheMap.get(fullUrl)) {
-      setData(_.cloneDeep(cacheMap.get(fullUrl)));
+    const cacheData = cacheMap.get(fullUrl);
+    if (useCache && cacheData) {
+      setData(cacheData);
       return;
     }
 
