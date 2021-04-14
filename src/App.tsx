@@ -19,8 +19,7 @@ function App() {
           CustomAlert.open({
             message: count,
             type: "success",
-            multiple: false,
-            autoClose: true,
+            multiple: true,
             description: "adasdasdasdasdasdasdasd",
           });
         }}
