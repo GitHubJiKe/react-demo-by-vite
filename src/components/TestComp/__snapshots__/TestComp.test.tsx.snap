@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TestComp should be these: 1`] = `
+<div
+  onClick={[Function]}
+>
+  <div
+    className="count"
+  >
+    0
+  </div>
+  <div>
+    Foo 
+    1
+  </div>
+  <div>
+    Foo 
+    2
+  </div>
+  <div>
+    Foo 
+    3
+  </div>
+  <div>
+    Foo 
+    4
+  </div>
+</div>
+`;
