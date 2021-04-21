@@ -1,7 +1,7 @@
 import { Button, Input, Form } from "antd";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router";
-import { EnsureLogined } from "../../components";
+import { CustomAlert, EnsureLogined } from "../../components";
 import Store from "../../Store";
 
 const FormItem = Form.Item;
@@ -31,6 +31,12 @@ export default function Login() {
           Store.login(values).then((success) => {
             if (success) {
               history.push(Store.routePathMap.home);
+            } else {
+              CustomAlert.open({
+                type: "error",
+                message: "登录失败",
+                description: "请检查输入信息",
+              });
             }
           });
         }}

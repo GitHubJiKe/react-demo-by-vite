@@ -1,0 +1,22 @@
+{
+  "name": "mockserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./app.js"
+  },
+  "author": "PengfeiYuan",
+  "license": "ISC",
+  "dependencies": {
+    "@types/koa": "^2.13.1",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^10.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/plugin-transform-async-to-generator": "^7.13.0",
+    "@babel/register": "^7.13.14"
+  }
+}

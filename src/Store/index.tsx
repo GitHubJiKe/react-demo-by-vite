@@ -11,6 +11,9 @@ import {
 } from "../Pages";
 import { IRouteProps } from "../Routes";
 import { Loading } from "../components";
+import http from "../utils/http";
+import API from "../utils/API";
+import { LoginRes } from "./config";
 
 export const routePathMap = {
   "404": "/404",
@@ -116,16 +119,21 @@ class AppStore {
   @action
   login(data: any) {
     Loading.global(true);
-    return new Promise((resolve) => {
-      console.log(data);
-      setTimeout(() => {
-        this.isLogined = true;
-        this.visitData = { age: 25, permissions: ["page2", "page1"] };
-        sessionStorage.setItem(VISIT_DATA, JSON.stringify(this.visitData));
-        sessionStorage.setItem(LOGINED, "true");
-        Loading.global(false);
-        resolve(true);
-      }, 2000);
+    return new Promise((resolve, reject) => {
+      http
+        .post<LoginRes>(API.login.login(), data)
+        .then((res) => {
+          const { data } = res;
+          this.isLogined = data.data.scuuess;
+          this.visitData = data.data.visitData || { age: 0, permissions: [] };
+          sessionStorage.setItem(VISIT_DATA, JSON.stringify(this.visitData));
+          sessionStorage.setItem(LOGINED, `${data.data.scuuess}`);
+          Loading.global(false);
+          resolve(data.data.scuuess);
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   }
 

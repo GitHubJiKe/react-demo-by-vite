@@ -1,0 +1,11 @@
+{
+  "data": {
+    "scuuess": true,
+    "visitData": {
+      "age": 25,
+      "permissions": ["page2", "page1"]
+    }
+  },
+  "errmsg": "",
+  "code": ""
+}
