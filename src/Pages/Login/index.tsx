@@ -1,7 +1,8 @@
 import { Button, Input, Form } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { CustomAlert, EnsureLogined } from "../../components";
+import PortalDemo from "../../components/PortalDemo";
 import Store from "../../Store";
 
 const FormItem = Form.Item;
@@ -16,6 +17,7 @@ const layout = {
 export default function Login() {
   const history = useHistory();
 
+  const [num, setnum] = useState(0);
   useEffect(() => {
     if (Store.isLogined) {
       history.push(Store.routePathMap.home);
@@ -24,6 +26,9 @@ export default function Login() {
 
   return (
     <>
+      <PortalDemo>
+        <h1>Hello world</h1>
+      </PortalDemo>
       <Form
         {...layout}
         name="login"
